@@ -14,6 +14,13 @@ const Home = () => {
     navigate('/cart');
   }
 
+  const formatRupiah = (angka) => {
+    let reverse = angka.toString().split('').reverse().join('');
+    let ribuan = reverse.match(/\d{1,3}/g);
+    ribuan = ribuan.join('.').split('').reverse().join('');
+    return `Rp ${ribuan}`;
+  }
+
   return (
     <div className="home-container">
       {isLoading ? (
@@ -30,7 +37,9 @@ const Home = () => {
                 <img src={product.image} alt={product.name} />
                 <div className="details">
                   <span>{product.desc}</span>
-                  <span className="price">{product.price}</span>
+                </div>
+                <div className="details">
+                  <span className="price">{formatRupiah(product.price)}</span>
                 </div>
                 <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
               </div>

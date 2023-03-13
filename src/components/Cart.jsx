@@ -24,6 +24,14 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+  const formatRupiah = (angka) => {
+    let reverse = angka.toString().split('').reverse().join('');
+    let ribuan = reverse.match(/\d{1,3}/g);
+    ribuan = ribuan.join('.').split('').reverse().join('');
+    return `Rp ${ribuan}`;
+  }
+  
   return (
     <div className="cart-container">
       <h2>Shopping Cart</h2>
@@ -71,7 +79,7 @@ const Cart = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="cart-product-price">${cartItem.price}</div>
+                  <div className="cart-product-price">{formatRupiah(cartItem.price)}</div>
                   <div className="cart-product-quantity">
                     <button onClick={() => handleDecreaseCart(cartItem)}>
                       -
@@ -80,7 +88,7 @@ const Cart = () => {
                     <button onClick={() => handleAddToCart(cartItem)}>+</button>
                   </div>
                   <div className="cart-product-total-price">
-                    ${cartItem.price * cartItem.cartQuantity}
+                    {formatRupiah(cartItem.price * cartItem.cartQuantity)}
                   </div>
                 </div>
               ))}
@@ -92,7 +100,7 @@ const Cart = () => {
             <div className="cart-checkout">
               <div className="subtotal">
                 <span>Subtotal</span>
-                <span className="amount">${cart.cartTotalAmount}</span>
+                <span className="amount">{formatRupiah(cart.cartTotalAmount)}</span>
               </div>
               <p>Taxes and shipping calculated at checkout</p>
               <button>Check out</button>
